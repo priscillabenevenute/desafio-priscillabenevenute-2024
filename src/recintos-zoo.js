@@ -13,7 +13,9 @@ const recintos = [
         bioma: "savana",
         tamanhoTotal: 10,
         animaisExistentes: [
-            { especie: "MACACO", quantidade: 3 }
+            {
+                especie: "MACACO", quantidade: 1
+            }
         ]
     },
     {
@@ -41,7 +43,6 @@ const recintos = [
         bioma: "savana",
         tamanhoTotal: 9,
         animaisExistentes: [
-            { especie: "LEAO", quantidade: 1 }
         ]
     }
 ];
@@ -65,32 +66,37 @@ class RecintosZoo {
     // Funcao para verificar se o recinto é adequado
     analisaRecintos(especie, quantidade) {
         const informacaoAnimal = this.encontrarAnimal(especie)
-        //Validar animal
+        // Validar animal
         if (!especie) {
             return "Animal não encontrado"
         }
-        //Validar quantidade
+        // Validar quantidade
         if (quantidade <= 0) {
             return "Quantidade inválida"
         }
-        //Validar tamanho
-        // if (informacaoAnimal.tamanho > quantidade) {
-        //     return "Não há recinto viável"
-        // }
 
         const tamanhoQuantidadeAnimal = this.calcularTamanhoAnimal(especie, quantidade)
         if (informacaoAnimal.grupoAlimentar === "carnivoro") {
-            console.log("animal é carnivoro")
             // TODO - vai se tornar uma funcao
             recintos.filter(r => {
-                r.animaisExistentes.filter(e => {
-                    if (informacaoAnimal.bioma.includes(r.bioma) && e.especie === informacaoAnimal.especie) {
+                // Verifica se tem animais no recinto
+                if (r.animaisExistentes.length !== 0) {
+                    r.animaisExistentes.filter(e => {
+                        if (informacaoAnimal.bioma.includes(r.bioma) && e.especie === informacaoAnimal.especie) {
+                            const espacoLivre = this.calcularEspacoLivre(r)
+                            if (tamanhoQuantidadeAnimal <= espacoLivre) {
+                                console.log(`Recinto ${r.numero} (espaço livre: ${espacoLivre}, total: ${r.tamanhoTotal})`)
+                            }
+                        }
+                    })
+                } else {
+                    if (informacaoAnimal.bioma.includes(r.bioma)) {
                         const espacoLivre = this.calcularEspacoLivre(r)
                         if (tamanhoQuantidadeAnimal <= espacoLivre) {
                             console.log(`Recinto ${r.numero} (espaço livre: ${espacoLivre}, total: ${r.tamanhoTotal})`)
                         }
                     }
-                })
+                }
             })
         } else {
             console.log("animal é herbivoro")
@@ -106,4 +112,4 @@ class RecintosZoo {
 
 }
 export { RecintosZoo as RecintosZoo };
-const resultado = new RecintosZoo().analisaRecintos('MACACO', 2);
+const resultado = new RecintosZoo().analisaRecintos('LEAO', 2);
