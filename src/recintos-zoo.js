@@ -86,7 +86,11 @@ class RecintosZoo {
                             const espacoLivre = this.calcularEspacoLivre(r)
                             if (tamanhoQuantidadeAnimal <= espacoLivre) {
                                 console.log(`Recinto ${r.numero} (espaço livre: ${espacoLivre}, total: ${r.tamanhoTotal})`)
+                            } else {
+                                console.log("Não há recinto viável")
                             }
+                        } else {
+                            console.log("Não há recinto viável")
                         }
                     })
                 } else {
@@ -94,7 +98,11 @@ class RecintosZoo {
                         const espacoLivre = this.calcularEspacoLivre(r)
                         if (tamanhoQuantidadeAnimal <= espacoLivre) {
                             console.log(`Recinto ${r.numero} (espaço livre: ${espacoLivre}, total: ${r.tamanhoTotal})`)
+                        } else {
+                            console.log("Não há recinto viável")
                         }
+                    } else {
+                        console.log("Não há recinto viável")
                     }
                 }
             })
