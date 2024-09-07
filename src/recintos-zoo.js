@@ -49,23 +49,28 @@ const recintos = [
 
 class RecintosZoo {
 
-    analisaRecintos(animal, quantidade) {
-    }
     // Funcao para encontrar um animal dentro de array de animais
     encontrarAnimal(especie) {
-        console.log(animais.find(a => a.especie === especie))
+        return animais.find(a => a.especie === especie)
     }
 
-    //Funcao para verificar se o recinto é o adequado
-    verificaRecinto(recinto, especie, quantidade) {
-        const informacaoAnimal = encontrarAnimal(especie)
-        if (!encontrarAnimal) {
+    // Funcao para verificar se o recinto é adequado
+    analisaRecintos(especie, quantidade) {
+        const informacaoAnimal = this.encontrarAnimal(especie)
+        if (!especie) {
             return "Animal não encontrado"
+        } else if (quantidade <= 0) {
+            return "Quantidade inválida"
+        } else if (informacaoAnimal.tamanho > quantidade) {
+            return "Não há recinto viável"
+        } else {
+            const recintosViaveis = recintos.filter(r => {
+                return r.tamanhoTotal >= quantidade && r.bioma === informacaoAnimal.bioma[0]
+            })
+            return { erro: null, recintosViaveis: recintosViaveis }
         }
     }
 
-    //Funcao para verificar se o recinto tem espaco
 }
-
 export { RecintosZoo as RecintosZoo };
-const resultado = new RecintosZoo().encontrarAnimal('MACACO');
+const resultado = new RecintosZoo().analisaRecintos('MACACO', 2);
